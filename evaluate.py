@@ -9,6 +9,16 @@ import seaborn as sns
 
 
 
+def x_train_feats(df, y):
+    
+    X_train = df
+    
+    lm = LinearRegression()
+    
+    model = lm.fit(X_train, y)
+    
+    return X_train, model
+
 
 def plot_residuals(y, yhat):
     plt.scatter(y, yhat)
@@ -74,4 +84,7 @@ def better_than_baseline(y, yhat):
         return True
     else:
         return False
+    
+
+
 
