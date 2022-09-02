@@ -21,11 +21,14 @@ def x_train_feats(df, y):
 
 
 def plot_residuals(y, yhat):
-    plt.scatter(y, yhat)
+    
+    residuals = y - yhat
+    
+    plt.scatter(y, residuals)
 
-    plt.xlabel('x = actual value')
-    plt.ylabel('y = predicted value')
-    plt.title('Residuals')
+    plt.xlabel('x = Home Value')
+    plt.ylabel('y = Residuals')
+    plt.title('Residuals vs Home Value')
     plt.show()
     return
 
@@ -53,31 +56,24 @@ def regression_errors(y, yhat):
 def baseline_mean_errors(y):
     
     
-    baseline = y.mean()
+    baseline = np.repeat(y.mean(), len(y))
     
-    df = pd.DataFrame(y)
     
-    df['baseline'] = baseline
+    MSE_baseline = mean_squared_error(y, baseline)
     
-    MSE_baseline = mean_squared_error(y, df.baseline)
+    SSE_baseline = MSE_baseline * len(y)
     
-    SSE_baseline = MSE_baseline * len(df)
-    
-    RMSE_baseline = mean_squared_error(y, df.baseline, squared=False)
+    RMSE_baseline = mean_squared_error(y, baseline, squared=False)
     
     return SSE_baseline, MSE_baseline, RMSE_baseline
 
 def better_than_baseline(y, yhat):
     
-    baseline = y.mean()
-    
-    df = pd.DataFrame(y)
-    
-    df['baseline'] = baseline
+    baseline = np.repeat(y.mean(), len(y))
     
     r2 = r2_score(y, yhat)
     
-    r2_baseline = r2_score(y, df.baseline)
+    r2_baseline = r2_score(y, baseline)
     
     if r2 > r2_baseline:
         

@@ -108,6 +108,7 @@ def wrangle_zillow():
 
     return df
 
+
 def scale_data(train, 
                validate, 
                test, 
@@ -140,3 +141,20 @@ def scale_data(train,
         return scaler, train_scaled, validate_scaled, test_scaled
     else:
         return train_scaled, validate_scaled, test_scaled
+    
+def wrangle_grades():
+    '''
+    Read student_grades csv file into a pandas DataFrame,
+    drop student_id column, replace whitespaces with NaN values,
+    drop any rows with Null values, convert all columns to int64,
+    return cleaned student grades DataFrame.
+    '''
+    # Acquire data from csv file.
+    df = pd.read_csv('student_grades.csv')
+    # Replace white space values with NaN values.
+    df = df.replace(r'^\s*$', np.nan, regex=True)
+    # Drop all rows with NaN values.
+    df = df.dropna()
+    # Convert all columns to int64 data types.
+    df = df.astype('int64')
+    return df
